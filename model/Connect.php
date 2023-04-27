@@ -1,46 +1,8 @@
 <?php
 
 class Connect extends PDO{
-    
-    private String $host;
-    private int $port;
-    private String $user;
-    private String $password;
-    private String $dbName;
-    private String $error;
-    private ?PDO $con;
+ 
     private static ?Connect $instance = null;
-
-    /**
-     * Constructeur
-     *
-     * @param String $host
-     * @param integer $port
-     * @param String $user
-     * @param String $password
-     * @param String $dbName
-     */
-    private function __construct(String $host, int $port , String $user, String $password, String $dbName) {
-
-        $this->host = $host;
-        $this->port = $port;
-        $this->user = $user;
-        $this->password = $password;
-        $this->dbName = $dbName;
-
-        
-        $dns = "pgsql:host=".$this->host.";port=".$this->port.";dbname=".$this->dbName;
-        $options = array(
-            PDO::ATTR_PERSISTENT  => true,
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-        );
-
-        try {
-            $this->con = new PDO($dns, $this->user, $this->password, $options);
-        } catch (Error $e) {
-            $this->error = $e->getMessage();
-        }
-    }
 
     /**
      * getInstance, return a connection
@@ -49,14 +11,19 @@ class Connect extends PDO{
      */
     public static function getInstance() : Connect {
         if(self::$instance == null){
-            self::$instance = new Connect('10.113.28.39', '5432' , 'fdebiasi', 'Lenouveaumotdepasse', 'php_florian');
+
+            $dns = "pgsql:host=10.113.28.39;port=5432;dbname=php_florian";
+            $options = array(
+                PDO::ATTR_PERSISTENT  => true,
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+            );
+            try {
+                self::$instance = new self($dns, 'fdebiasi', 'Lenouveaumotdepasse', $options);
+            } catch (Error $e) {
+                echo($e->getMessage());
+            }
         }
         return self::$instance;
     }
-
-    public function getConnection() : PDO {
-        return $this->con;
-    }
-
 }
 ?>

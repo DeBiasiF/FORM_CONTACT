@@ -17,7 +17,7 @@ class ContactRepository {
     }
 
     public function getAllContact() : Array {
-        $connectionDB = Connect::getInstance()->getConnection();
+        $connectionDB = Connect::getInstance();
         $stmt = $connectionDB->prepare('SELECT * FROM contact;');
         $stmt->execute();
         $contactList = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -26,7 +26,7 @@ class ContactRepository {
     }
 
     public function getContactById(int $id) : Contact {
-        $connectionDB = Connect::getInstance()->getConnection();
+        $connectionDB = Connect::getInstance();
         $stmt = $connectionDB->prepare('SELECT * FROM contact WHERE id = :id ;');
         $stmt->bindValue(":id", $id, PDO::PARAM_INT);
         $stmt->execute();
