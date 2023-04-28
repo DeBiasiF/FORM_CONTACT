@@ -4,6 +4,11 @@ class Connect extends PDO{
  
     private static ?Connect $instance = null;
 
+
+    private function __construct($dns, $username, $password, $options){
+        parent::__construct($dns, $username, $password, $options);
+    }
+    
     /**
      * getInstance, return a connection
      *
@@ -11,14 +16,14 @@ class Connect extends PDO{
      */
     public static function getInstance() : Connect {
         if(self::$instance == null){
-
-            $dns = "pgsql:host=10.113.28.39;port=5432;dbname=php_florian";
+            $conf = require_once './config.php';
+            $dns = "pgsql:host=".$conf['host'].";port=".$conf['port'].";dbname=".$conf['dbname'];
             $options = array(
                 PDO::ATTR_PERSISTENT  => true,
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
             );
             try {
-                self::$instance = new self($dns, 'fdebiasi', 'Lenouveaumotdepasse', $options);
+                self::$instance = new self($dns, $conf['username'], $conf['pass'], $options);
             } catch (Error $e) {
                 echo($e->getMessage());
             }

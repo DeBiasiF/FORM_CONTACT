@@ -3,7 +3,6 @@
 
 class ContactRepository {
     
-
     public static function createContact(Array $myResult) : Contact {
         $contact = new Contact();
         $contact->setId($myResult['id'])
@@ -16,30 +15,29 @@ class ContactRepository {
         return $contact;                
     }
 
-    public function getAllContact() : Array {
+    public static function getAllContact() : Array {
         $connectionDB = Connect::getInstance();
         $stmt = $connectionDB->prepare('SELECT * FROM contact;');
+        $stmt->setFetchMode(PDO::FETCH_CLASS, 'Contact');
         $stmt->execute();
-        $contactList = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+        $contactList = $stmt->fetchAll();
         return $contactList;
     }
 
-    public function getContactById(int $id) : Contact {
+    public static  function getContactById(int $id) : Contact {
         $connectionDB = Connect::getInstance();
         $stmt = $connectionDB->prepare('SELECT * FROM contact WHERE id = :id ;');
         $stmt->bindValue(":id", $id, PDO::PARAM_INT);
+        $stmt->setFetchMode(PDO::FETCH_CLASS, 'Contact');
         $stmt->execute();
-        $contact = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $contact = $stmt->fetchAll();
 
         if (count($contact) !== 0) {
-            return static::createContact($contact[0]);
+            return $contact[0];
         }else{
             return null;
         }    
-    }
-
-    
+    }    
 }
 ?>
 
