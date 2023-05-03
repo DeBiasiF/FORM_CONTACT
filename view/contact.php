@@ -1,7 +1,12 @@
+<?php
+require_once "./view/partial/header.php";
+require_once "./view/partial/navbar.php";
+?>
+
 <div class="container py-5">
     <div class="row">
         <div class="col-lg-4 col-md-5 col-sm-6">
-            <img src="https://via.placeholder.com/200" class="img-fluid rounded-circle" alt="Photo de profil">
+            <img src="<?=$file?>" class="img-fluid rounded-circle" alt="Photo de profil">
         </div>
         <div class="col-lg-8 col-md-7 col-sm-6">
             <h1 class="mb-0"><?=$firstName." ".$lastName?></h1>
@@ -11,6 +16,10 @@
                 <li><i class="fas fa-phone me-2"></i> <?=$phone?></li>
             </ul>
             <a href="/Form_Contact/" class="btn btn-primary">Retour à l'accueil</a>
+            <a class="btn btn-primary" href= /Form_Contact/index.php/updatecontact?<?=$_SERVER['QUERY_STRING']?>>Modifier le contact</a>            
         </div>
     </div>
 </div>
+<?php
+require_once "./view/partial/footer.php";
+?>

@@ -1,4 +1,9 @@
-<form action="" method="post">
+<?php
+require_once "./view/partial/header.php";
+require_once "./view/partial/navbar.php";
+?>
+
+<form enctype="multipart/form-data"  action="" method="post">
     <div class="mb-3">
         <label for="lastName" class="form-label">Nom de famille</label>
         <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Votre nom de famille">
@@ -25,3 +30,6 @@
     </div>
     <button type="submit" class="btn btn-primary">Envoyer</button>
 </form>
+<?php
+require_once "./view/partial/footer.php";
+?>

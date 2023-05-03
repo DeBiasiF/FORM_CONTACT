@@ -1,3 +1,8 @@
+<?php
+require_once "./view/partial/header.php";
+require_once "./view/partial/navbar.php";
+?>
+
 <div class="container-fluid">
     <h1>MES CONTACTS</h1>
     <div class="row">
@@ -22,3 +27,6 @@ foreach ($contacts as $contact) {
 <?php } ?>
     </div>
 </div>
+<?php
+require_once "./view/partial/footer.php";
+?>
